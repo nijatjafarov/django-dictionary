@@ -1,0 +1,17 @@
+{% extends "app/base.html" %}
+{% block content %}
+<h1 style="margin-bottom: 3%;color:#818182;"> <b style="color: #212529;">{{ word.name }}</b> sözünü yenidən tərcümə edin!</h1>
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="author_translation">Sözü yenidən tərcümə edin:</label>
+        <input style="width: 50%; min-width: 290px;" type="text" class="form-control" value="{{ word.author_translation }}" name="author_translation" placeholder="Yeni tərcümə">
+        <div id="{{ form.name.id_for_label }}" class="invalid-feedback">
+            {{ form.name.errors }}
+        </div>
+    </div>
+    <div class="container row">
+        <button type="submit" class="btn btn-primary">Tərcümə et</button>
+    </div>
+</form>
+{% endblock content %}

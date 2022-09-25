@@ -1,0 +1,13 @@
+{% extends "app/base.html" %}
+{% block content %}
+<h1 style="margin-bottom: 3%;color:#818182;"> <b style="color: #212529;">{{ word.name }}</b> sözünü silmək istədiyinizə əminsiniz?</h1>
+<form method="POST">
+    {% csrf_token %}
+    <div style="margin-bottom: 1rem;" class="container row">
+        <button type="submit" class="btn btn-danger">Bəli</button>
+        <span style="    margin-top: 0.4rem; margin-left: 2rem;">
+            <a href="{% url 'client-source' %}">Geriyə dön</a>
+        </span>
+    </div>
+</form>
+{% endblock content %}

@@ -1,0 +1,65 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+    <h1>Praktika etmək istədiyiniz sözləri seçin</h1>
+    <h1>{{wordName}}</h1>
+        <div class="alert alert-info" role="alert">
+        Ardıcıl seçmə üçün <b>command</b>, ayrı seçim üçün <b>option</b> butonundan istifadə edin
+        </div>
+        <form method="POST">
+            {% csrf_token %}
+            <select name="words" id="words" class="form-select" multiple aria-label="multiple select example" style="width: 100%; height: 150px;" multiple>
+                {% for word in words %}
+                    {% if word.id in selectedInts %}
+                        <option value="{{ word.id }}" selected>{{ word.name }}</option>
+                    {% else %}
+                        <option value="{{ word.id }}">{{ word.name }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <div class="col text-center" style="margin-top: 4%; margin-bottom: 4%;">
+                <button id="about-word-button" type="submit" class="btn btn-primary">Siyahıdan təsadüfi bir söz seçin</button>
+            </div>
+        </form>
+        {% if selectedWord %}
+        <div class="about-word" style="display: block;">
+        <div class="selected_word_group" style="display: grid; justify-content: center;">
+            <h3 class="alert alert-light" style="padding: 0; margin: 0;" role="alert">Seçdiyiniz söz:</h3>
+            <h2 id="selected_word" class="text-center">{{selectedWord.name}}</h2>
+        </div>
+        <div class="sounds" style="justify-content: center; display: grid;">
+            <div id="sound" class=" d-flex" style="cursor: pointer; margin-top: 10%;" onclick="british_sound()">
+            <i class="bi bi-volume-up" style="font-size: 2em; color:#007bff;"></i>
+            <h5 style="margin-top: 13px;">British accent</h5>
+            </div>
+            <div id="sound" class=" d-flex" style="cursor: pointer;" onclick="american_sound()">
+            <i class="bi bi-volume-up" style="font-size: 2em; color:#007bff;"></i>
+            <h5 style="margin-top: 13px;">American accent</h5>
+            </div>
+        </div>
+        <div class="col text-center" style="margin-top: 4%; margin-bottom: 1%;">
+            <button id="word-info-button" type="button" class="btn btn-info" onclick="word_info()">Sözün tərcümə və mənasına baxın</button>
+        </div>
+        
+        <div class="word-info" style="display: none;">
+            <div class="col text-center">
+            <i class="bi bi-caret-down-fill"></i>
+            </div>
+            <div class="translation">
+            <h3 style=" margin-top: 2%;"><span class="alert alert-light" style="padding: 0;" role="alert">Tərcümə:</span></h3>
+            <ul>
+                {% for translation in selectedWord.translation_set.all %}
+                    <li><span class="alert alert-light" style="padding: 0; font-size: 1.5em;" role="alert">{{ translation.part_of_speech }}</span><h3>{{translation.name}}</h3></li>
+                {% endfor %}
+            </ul>
+            <h3 style=" margin-top: 2%;"><span class="alert alert-light" style="padding: 0;" role="alert">Definitions:</span></h3>
+            <ul>
+                {% for definition in selectedWord.definition_set.all %}
+                <li><h3>{{ definition.name }}</h3></li>
+                {% endfor %}
+            </ul>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endblock content %}

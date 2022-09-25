@@ -1,0 +1,10 @@
+{% extends "app/base.html" %}
+{% block content %}
+<h1 style="margin-bottom: 3%;">Siz hesabınızdan çıxdınız</h1>
+<div style="margin-bottom: 1rem;">
+    <span>
+        <span>Yenidən daxil olun:</span>
+        <a href="{% url 'login' %}">Daxil olun</a>
+    </span>
+</div>
+{% endblock content %}

@@ -1,0 +1,24 @@
+{% extends "app/base.html" %}
+{% block content %}
+<h1 style="margin-bottom: 3%;">Söz əlavə edin</h1>
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        {{ form.name.label_tag }}
+        {{ form.name }}
+        <div id="{{ form.name.id_for_label }}" class="invalid-feedback">
+            {{ form.name.errors }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form.author_translation.label_tag }}
+        {{ form.author_translation }}
+        <div id="{{ form.author_translation.id_for_label }}" class="invalid-feedback">
+            {{ form.author_translation.errors }}
+          </div>
+    </div>
+    <div class="container row">
+        <button type="submit" class="btn btn-primary">Əlavə et</button>
+    </div>
+</form>
+{% endblock content %}

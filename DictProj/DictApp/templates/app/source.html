@@ -1,0 +1,49 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+    <div style="display: flex; margin-bottom: 2%;">
+        <h1>Söz əlavə edin</h1>
+        <a style="font-size: 2.5em; margin-left: 10px;" href="{% url 'create-word' %}"><i class="bi bi-plus-square"></i></a>
+    </div>
+        <h1 style="margin-bottom: 2%;">Sözlərin siyahısı</h1>
+        <table style="margin-bottom: 5%;" class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">Söz</th>
+            <th scope="col">Mənası</th>
+            <th scope="col">Tərcüməsi</th>
+            <th scope="col">Redaktə</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for word in words %}
+            <tr>
+                <td>{{ word.name }}</td>
+                <td>
+                    <ul>   
+                        {% for definition in word.definition_set.all %}
+                            {% if definition.name != '' %}
+                                <li>{{ definition.name }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    <ul>   
+                        {% for translation in word.translation_set.all %}
+                            <li><b style="color: #818182;">{{translation.part_of_speech}}:</b> {{ translation.name }}</li>
+                        {% endfor %}
+                        {% if word.author_translation != '' %}
+                            <li><b style="color: #818182;">Sizin tərcüməniz:</b> {{ word.author_translation }}</li>
+                        {% endif %}
+                    </ul>
+                </td>
+                <td>
+                    <a href="{% url 'update-word' word.id %}">Düzəlt</a>
+                    <a href="{% url 'delete-word' word.id %}">Sil</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

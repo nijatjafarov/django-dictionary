@@ -1,0 +1,39 @@
+{% extends 'app/base.html' %}
+{% block content %}
+{% for error in form.non_field_errors %}
+    {{error}}
+{% endfor %}
+<h1 style="margin-bottom: 3%;">Daxil olun</h1>
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="username">İstifadəçi adını daxil edin:</label>
+        <input style="width: 50%; min-width: 290px;" type="text" class="form-control" name="username" placeholder="İstifadəçi adı">
+        <div id="{{ form.username.id_for_label }}" class="invalid-feedback">
+            {{ form.username.errors }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="password">Şifrəni daxil edin:</label>
+        <input style="width: 50%; min-width: 290px;" type="password" class="form-control" name="password" placeholder="Şifrə">
+        <div id="{{ form.password.id_for_label }}" class="invalid-feedback">
+            {{ form.password.errors }}
+        </div>
+    </div>
+    <div class="checkbox_and_sign_up row container" style="justify-content: space-between;
+    width: 50%;
+    margin-bottom: 1rem;
+    min-width: 280px;">
+        <div class="custom-control custom-checkbox mr-sm-2">
+        <input type="checkbox" class="custom-control-input" id="remember_me" name="remember_me">
+        <label class="custom-control-label" for="remember_me">Yadda saxla</label>
+        </div>
+        <span>
+        <span>Hesabınız yoxdur?</span>
+        <a href="{% url 'register' %}">Qeydiyyatdan keçin</a>
+        </span>
+    </div>
+    <button type="submit" class="btn btn-primary">Daxil ol</button>
+    <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+{% endblock content %}
